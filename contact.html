@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Cabinet AG AVOCATS | Prendre rendez-vous avocat droit commercial</title>
+    <meta name="description" content="Contactez AG AVOCATS pour vos besoins en droit commercial. Prenez rendez-vous avec nos avocats spécialisés. Cabinet à Paris, conseil juridique expert.">
+    <meta name="keywords" content="contact avocat commercial, rendez-vous avocat, cabinet avocat Paris, consultation juridique">
+    <meta name="author" content="AG AVOCATS">
+    <meta name="robots" content="index, follow">
+    
+    <link rel="canonical" href="https://www.cabinetag.com/contact.html">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar" x-data="{ open: false }">
+            <div class="container">
+                <div class="nav-brand">
+                    <a href="index.html" class="logo">AG AVOCATS</a>
+                </div>
+                <button class="nav-toggle" @click="open = !open" :class="{ 'active': open }">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul class="nav-menu" :class="{ 'active': open }">
+                    <li><a href="index.html" class="nav-link">Accueil</a></li>
+                    <li class="dropdown" x-data="{ open: false }">
+                        <a href="#" class="nav-link" @click="open = !open">Expertises</a>
+                        <ul class="dropdown-menu" :class="{ 'active': open }">
+                            <li><a href="baux-commerciaux.html">Baux commerciaux</a></li>
+                            <li><a href="contentieux-commercial.html">Contentieux commercial</a></li>
+                            <li><a href="droit-franchise.html">Droit de la franchise</a></li>
+                            <li><a href="droit-contrats.html">Droit des contrats</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="contact.html" class="nav-link active">Contact</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <div class="contact-page">
+                <header class="page-header">
+                    <h1>Contactez-nous</h1>
+                    <p>Prenez rendez-vous pour une consultation personnalisée</p>
+                </header>
+
+                <div class="contact-content">
+                    <div class="contact-form-section">
+                        <h2>Demande de consultation</h2>
+                        <form class="contact-form" x-data="contactForm()" @submit.prevent="submitForm">
+                            <div class="form-group">
+                                <label for="name">Nom complet *</label>
+                                <input type="text" id="name" name="name" x-model="formData.name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email *</label>
+                                <input type="email" id="email" name="email" x-model="formData.email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Téléphone</label>
+                                <input type="tel" id="phone" name="phone" x-model="formData.phone">
+                            </div>
+                            <div class="form-group">
+                                <label for="company">Entreprise</label>
+                                <input type="text" id="company" name="company" x-model="formData.company">
+                            </div>
+                            <div class="form-group">
+                                <label for="subject">Domaine d'expertise *</label>
+                                <select id="subject" name="subject" x-model="formData.subject" required>
+                                    <option value="">Sélectionnez un domaine</option>
+                                    <option value="baux-commerciaux">Baux commerciaux</option>
+                                    <option value="contentieux-commercial">Contentieux commercial</option>
+                                    <option value="droit-franchise">Droit de la franchise</option>
+                                    <option value="droit-contrats">Droit des contrats</option>
+                                    <option value="autre">Autre</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="message">Message *</label>
+                                <textarea id="message" name="message" rows="5" x-model="formData.message" required placeholder="Décrivez brièvement votre demande..."></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" x-model="formData.consent" required>
+                                    <span class="checkmark"></span>
+                                    J'accepte que mes données soient utilisées pour me recontacter dans le cadre de ma demande *
+                                </label>
+                            </div>
+                            <button type="submit" class="submit-btn" :disabled="isSubmitting">
+                                <span x-show="!isSubmitting">Envoyer la demande</span>
+                                <span x-show="isSubmitting">Envoi en cours...</span>
+                            </button>
+                        </form>
+                    </div>
+
+                    <div class="contact-info-section">
+                        <h2>Informations de contact</h2>
+                        <div class="contact-info">
+                            <div class="info-item">
+                                <div class="info-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                        <polyline points="22,6 12,13 2,6"></polyline>
+                                    </svg>
+                                </div>
+                                <div class="info-content">
+                                    <h3>Email</h3>
+                                    <p><a href="mailto:contact@cabinetag.com">contact@cabinetag.com</a></p>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                        <circle cx="12" cy="10" r="3"></circle>
+                                    </svg>
+                                </div>
+                                <div class="info-content">
+                                    <h3>Adresse</h3>
+                                    <p>Cabinet AG AVOCATS<br>
+                                    Paris, France</p>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <polyline points="12,6 12,12 16,14"></polyline>
+                                    </svg>
+                                </div>
+                                <div class="info-content">
+                                    <h3>Horaires</h3>
+                                    <p>Lundi - Vendredi<br>
+                                    9h00 - 18h00</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="consultation-info">
+                            <h3>Première consultation</h3>
+                            <p>Nous proposons une première consultation pour évaluer votre situation et vous présenter nos solutions. Cette consultation nous permet de :</p>
+                            <ul>
+                                <li>Comprendre vos enjeux spécifiques</li>
+                                <li>Analyser votre situation juridique</li>
+                                <li>Vous proposer une stratégie adaptée</li>
+                                <li>Vous fournir un devis détaillé</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Map Section -->
+                <div class="map-section">
+                    <h2>Localisation</h2>
+                    <div class="map-container">
+                        <div class="map-placeholder">
+                            <svg width="100%" height="300" viewBox="0 0 600 300" fill="none">
+                                <rect width="600" height="300" fill="#e9ecef"/>
+                                <path d="M300 120c-16.569 0-30 13.431-30 30s13.431 30 30 30 30-13.431 30-30-13.431-30-30-30zm0 45c-8.284 0-15-6.716-15-15s6.716-15 15-15 15 6.716 15 15-6.716 15-15 15z" fill="#6c757d"/>
+                                <text x="300" y="200" text-anchor="middle" fill="#6c757d" font-family="Arial, sans-serif" font-size="16">Carte Google Maps</text>
+                                <text x="300" y="220" text-anchor="middle" fill="#6c757d" font-family="Arial, sans-serif" font-size="14">Cabinet AG AVOCATS - Paris</text>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>AG AVOCATS</h3>
+                    <p>Cabinet d'avocat spécialisé en droit commercial</p>
+                    <p>Conseil stratégique & défense des entreprises</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Nos expertises</h4>
+                    <ul>
+                        <li><a href="baux-commerciaux.html">Baux commerciaux</a></li>
+                        <li><a href="contentieux-commercial.html">Contentieux commercial</a></li>
+                        <li><a href="droit-franchise.html">Droit de la franchise</a></li>
+                        <li><a href="droit-contrats.html">Droit des contrats</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>Email: <a href="mailto:contact@cabinetag.com">contact@cabinetag.com</a></p>
+                    <p><a href="contact.html">Prendre rendez-vous</a></p>
+                </div>
+                <div class="footer-section">
+                    <h4>Informations légales</h4>
+                    <ul>
+                        <li><a href="mentions-legales.html">Mentions légales</a></li>
+                        <li><a href="mentions-legales.html#rgpd">Protection des données</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 AG AVOCATS. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+# Robots.txt for AG AVOCATS
+# Cabinet d'avocat spécialisé en droit commercial
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://www.cabinetag.com/sitemap.xml
+
+# Crawl delay (optional - helps with server load)
+Crawl-delay: 1
+
+# Specific rules for major search engines
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Slurp
+Allow: /
+Crawl-delay: 1
+
+# Block access to certain file types that shouldn't be indexed
+Disallow: /*.pdf$
+Disallow: /*.doc$
+Disallow: /*.docx$
+Disallow: /*.xls$
+Disallow: /*.xlsx$
+Disallow: /*.ppt$
+Disallow: /*.pptx$
+
+# Block access to technical files
+Disallow: /css/
+Disallow: /js/
+Disallow: /assets/
+Disallow: /*.css$
+Disallow: /*.js$
+
+# Block access to admin or private areas (if they exist)
+Disallow: /admin/
+Disallow: /private/
+Disallow: /tmp/
+Disallow: /logs/
+
+# Block access to common development files
+Disallow: /*.txt$
+Disallow: /*.log$
+Disallow: /*.bak$
+Disallow: /*~$
+
+# Additional crawling hints
+# Priority pages for search engines
+# (This is informational - actual priority is set in sitemap.xml)
+
+# Main pages:
+# / (homepage) - Priority: 1.0
+# /baux-commerciaux.html - Priority: 0.8
+# /contentieux-commercial.html - Priority: 0.8
+# /droit-franchise.html - Priority: 0.8
+# /droit-contrats.html - Priority: 0.8
+# /contact.html - Priority: 0.7
+# /mentions-legales.html - Priority: 0.3
