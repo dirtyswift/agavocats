@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AG AVOCATS - Cabinet d'avocat spécialisé en droit commercial</title>
+    <meta name="description" content="AG AVOCATS, cabinet d'avocat spécialisé en droit commercial, baux commerciaux, contentieux commercial et droit de la franchise.">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="AG AVOCATS - Cabinet d'avocat spécialisé en droit commercial">
+    <meta property="og:description" content="Conseil stratégique et défense des entreprises en droit commercial">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="AG AVOCATS - Cabinet d'avocat spécialisé en droit commercial">
+    <meta property="twitter:description" content="Conseil stratégique et défense des entreprises en droit commercial">
+    
+    <link rel="canonical" href="https://www.cabinetag.com/">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: #f8fafc;
+            overflow: hidden;
+        }
+
+        .iframe-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1000;
+        }
+
+        .iframe-wrapper {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+
+        /* Loading screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(135deg, #2d3748, #4a5568);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            z-index: 2000;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loading-logo {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .loading-subtitle {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            color: #e2e8f0;
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #4a5568;
+            border-top: 3px solid #3182ce;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Error screen */
+        .error-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(135deg, #742a2a, #c53030);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            z-index: 3000;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .error-screen.show {
+            display: flex;
+        }
+
+        .error-title {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .error-message {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            line-height: 1.6;
+        }
+
+        .retry-button {
+            background-color: #3182ce;
+            color: white;
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .retry-button:hover {
+            background-color: #2c5282;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .loading-logo {
+                font-size: 2rem;
+            }
+            
+            .loading-subtitle {
+                font-size: 1rem;
+                padding: 0 1rem;
+            }
+            
+            .error-title {
+                font-size: 1.5rem;
+            }
+            
+            .error-message {
+                font-size: 1rem;
+            }
+        }
+
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            .loading-spinner {
+                animation: none;
+            }
+            
+            .loading-screen {
+                transition: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-logo">AG AVOCATS</div>
+        <div class="loading-subtitle">Conseil stratégique & défense des entreprises</div>
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Error Screen -->
+    <div class="error-screen" id="errorScreen">
+        <div class="error-title">Erreur de chargement</div>
+        <div class="error-message">
+            Le site AG AVOCATS n'a pas pu être chargé. Veuillez vérifier votre connexion internet et réessayer.
+        </div>
+        <button class="retry-button" onclick="retryLoad()">Réessayer</button>
+    </div>
+
+    <!-- Main iframe container -->
+    <div class="iframe-container">
+        <iframe 
+            id="mainIframe"
+            class="iframe-wrapper"
+            src="https://ag-avocats-site-dirtyswift.replit.app"
+            title="AG AVOCATS - Cabinet d'avocat spécialisé en droit commercial"
+            loading="eager"
+            sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-top-navigation"
+            onload="handleIframeLoad()"
+            onerror="handleIframeError()"
+        ></iframe>
+    </div>
+
+    <script>
+        // Configuration
+        const IFRAME_URL = 'https://ag-avocats-site-dirtyswift.replit.app';
+        const LOAD_TIMEOUT = 15000; // 15 secondes
+        
+        let loadTimeout;
+        let retryCount = 0;
+        const MAX_RETRIES = 3;
+
+        // Elements
+        const loadingScreen = document.getElementById('loadingScreen');
+        const errorScreen = document.getElementById('errorScreen');
+        const mainIframe = document.getElementById('mainIframe');
+
+        // Initialize
+        function init() {
+            console.log('Initializing AG AVOCATS iframe wrapper...');
+            
+            // Set load timeout
+            loadTimeout = setTimeout(() => {
+                console.error('Iframe load timeout');
+                showError();
+            }, LOAD_TIMEOUT);
+
+            // Add error event listener
+            mainIframe.addEventListener('error', handleIframeError);
+            
+            // Check if iframe is already loaded (cached)
+            if (mainIframe.contentDocument && mainIframe.contentDocument.readyState === 'complete') {
+                handleIframeLoad();
+            }
+        }
+
+        // Handle successful iframe load
+        function handleIframeLoad() {
+            console.log('Iframe loaded successfully');
+            clearTimeout(loadTimeout);
+            
+            // Small delay to ensure content is visible
+            setTimeout(() => {
+                loadingScreen.classList.add('hidden');
+                retryCount = 0; // Reset retry count on success
+            }, 500);
+        }
+
+        // Handle iframe error
+        function handleIframeError() {
+            console.error('Iframe failed to load');
+            clearTimeout(loadTimeout);
+            showError();
+        }
+
+        // Show error screen
+        function showError() {
+            loadingScreen.classList.add('hidden');
+            errorScreen.classList.add('show');
+        }
+
+        // Hide error screen
+        function hideError() {
+            errorScreen.classList.remove('show');
+            loadingScreen.classList.remove('hidden');
+        }
+
+        // Retry loading
+        function retryLoad() {
+            if (retryCount >= MAX_RETRIES) {
+                alert('Impossible de charger le site après plusieurs tentatives. Veuillez contacter le support.');
+                return;
+            }
+
+            retryCount++;
+            console.log(`Retry attempt ${retryCount}/${MAX_RETRIES}`);
+            
+            hideError();
+            
+            // Force reload iframe
+            mainIframe.src = '';
+            setTimeout(() => {
+                mainIframe.src = IFRAME_URL;
+                
+                // Reset timeout
+                loadTimeout = setTimeout(() => {
+                    console.error(`Iframe load timeout on retry ${retryCount}`);
+                    showError();
+                }, LOAD_TIMEOUT);
+            }, 100);
+        }
+
+        // Handle page visibility change (for better UX)
+        document.addEventListener('visibilitychange', function() {
+            if (document.visibilityState === 'visible') {
+                // Page became visible, check if iframe is still accessible
+                try {
+                    if (mainIframe.contentWindow) {
+                        // Iframe is accessible
+                        console.log('Page visible, iframe accessible');
+                    }
+                } catch (error) {
+                    console.warn('Iframe accessibility check failed:', error);
+                }
+            }
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            // Ensure iframe maintains full viewport
+            const container = document.querySelector('.iframe-container');
+            if (container) {
+                container.style.width = '100vw';
+                container.style.height = '100vh';
+            }
+        });
+
+        // Keyboard accessibility
+        document.addEventListener('keydown', function(event) {
+            // Allow Escape key to retry if on error screen
+            if (event.key === 'Escape' && errorScreen.classList.contains('show')) {
+                retryLoad();
+            }
+        });
+
+        // Initialize on DOM ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+
+        // Analytics and monitoring (optional)
+        function trackEvent(eventName, data = {}) {
+            console.log(`Event: ${eventName}`, data);
+            // Add your analytics tracking here if needed
+            // Example: gtag('event', eventName, data);
+        }
+
+        // Track load success/failure
+        mainIframe.addEventListener('load', () => trackEvent('iframe_load_success'));
+        mainIframe.addEventListener('error', () => trackEvent('iframe_load_error', { retryCount }));
+    </script>
+</body>
+</html>

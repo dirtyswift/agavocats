@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  ag-avocats-wrapper:
+    build: .
+    container_name: ag-avocats-wrapper
+    restart: unless-stopped
+    networks:
+      - traefik
+    labels:
+      # Traefik configuration
+      - "traefik.enable=true"
+      - "traefik.http.routers.ag-avocats.rule=Host(`cabinetag.com`) || Host(`www.cabinetag.com`)"
+      - "traefik.http.routers.ag-avocats.entrypoints=websecure"
+      - "traefik.http.routers.ag-avocats.tls.certresolver=letsencrypt"
+      
+      # Redirect www to non-www
+      - "traefik.http.routers.ag-avocats-www.rule=Host(`www.cabinetag.com`)"
+      - "traefik.http.routers.ag-avocats-www.entrypoints=websecure"
+      - "traefik.http.routers.ag-avocats-www.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.ag-avocats-www.middlewares=redirect-to-non-www"
+      
+      # HTTP to HTTPS redirect
+      - "traefik.http.routers.ag-avocats-http.rule=Host(`cabinetag.com`) || Host(`www.cabinetag.com`)"
+      - "traefik.http.routers.ag-avocats-http.entrypoints=web"
+      - "traefik.http.routers.ag-avocats-http.middlewares=redirect-to-https"
+      
+      # Middlewares
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.permanent=true"
+      - "traefik.http.middlewares.redirect-to-non-www.redirectregex.regex=^https://www\\.(.+)"
+      - "traefik.http.middlewares.redirect-to-non-www.redirectregex.replacement=https://$${1}"
+      - "traefik.http.middlewares.redirect-to-non-www.redirectregex.permanent=true"
+      
+      # Service configuration
+      - "traefik.http.services.ag-avocats.loadbalancer.server.port=80"
+      
+      # Health check
+      - "traefik.http.services.ag-avocats.loadbalancer.healthcheck.path=/health"
+      - "traefik.http.services.ag-avocats.loadbalancer.healthcheck.interval=30s"
+      - "traefik.http.services.ag-avocats.loadbalancer.healthcheck.timeout=5s"
+    
+    # Resource limits (optional)
+    deploy:
+      resources:
+        limits:
+          memory: 128M
+          cpus: '0.5'
+        reservations:
+          memory: 64M
+          cpus: '0.1'
+
+networks:
+  traefik:
+    external: true
