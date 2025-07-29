@@ -3,10 +3,12 @@ cmd = "npm start"
 
 [deployment]
 build = ["npm", "install"]
-run = ["npm", "start"]
+run = ["node", "server.js"]
+deploymentTarget = "cloudrun"
 
 [env]
 NODE_ENV = "production"
 
 [web]
 port = 5000
+host = "0.0.0.0"

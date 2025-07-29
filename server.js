@@ -29,8 +29,19 @@ app.get('/health', (req, res) => {
     res.status(200).json({ 
         status: 'OK', 
         timestamp: new Date().toISOString(),
-        environment: process.env.NODE_ENV || 'development'
+        environment: process.env.NODE_ENV || 'development',
+        port: PORT,
+        uptime: process.uptime()
     });
+});
+
+// Additional health check routes that some deployment systems expect
+app.get('/healthz', (req, res) => {
+    res.status(200).send('OK');
+});
+
+app.get('/ping', (req, res) => {
+    res.status(200).send('pong');
 });
 
 // Root route
