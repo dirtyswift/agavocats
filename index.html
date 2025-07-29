@@ -207,8 +207,13 @@
         </div>
     </footer>
 
+    <!-- Test visible -->
+    <div id="test-element" style="position: fixed; top: 100px; right: 20px; background: red; color: white; padding: 10px; z-index: 99999;">
+        TEST VISIBLE
+    </div>
+
     <!-- Chatbot -->
-    <div class="chatbot-container" x-data="{
+    <div class="chatbot-container" style="position: fixed !important; bottom: 2rem !important; right: 2rem !important; z-index: 99999 !important; background: blue; width: 80px; height: 80px;" x-data="{
         isOpen: false,
         isTyping: false,
         currentMessage: '',
