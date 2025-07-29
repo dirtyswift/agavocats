@@ -1,0 +1,8 @@
+[deployment]
+build = ["npm", "install"]
+run = ["node", "server.js"]
+deploymentTarget = "cloudrun"
+
+[secrets]
+NODE_ENV = "production"
+PORT = "5000"

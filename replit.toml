@@ -2,13 +2,35 @@
 cmd = "npm start"
 
 [deployment]
-build = ["npm", "install"]
+build = ["npm", "install", "--production"]
 run = ["node", "server.js"]
 deploymentTarget = "cloudrun"
+ignorePorts = false
+publicDir = "."
 
 [env]
 NODE_ENV = "production"
 
-[web]
-port = 5000
-host = "0.0.0.0"
+[nix]
+channel = "stable-24_05"
+
+[unitTest]
+language = "nodejs"
+
+[debugger]
+support = true
+
+[languages]
+
+[languages.javascript]
+pattern = "**/{*.js,*.jsx,*.ts,*.tsx,*.json}"
+
+[languages.javascript.languageServer]
+start = "typescript-language-server --stdio"
+
+[gitHubImport]
+requiredFiles = [".replit", "replit.toml"]
+
+[deployment.env]
+NODE_ENV = "production"
+PORT = "5000"
