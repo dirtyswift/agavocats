@@ -1,0 +1,12 @@
+[run]
+cmd = "npm start"
+
+[deployment]
+build = ["npm", "install"]
+run = ["npm", "start"]
+
+[env]
+NODE_ENV = "production"
+
+[web]
+port = 5000
