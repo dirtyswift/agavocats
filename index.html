@@ -345,6 +345,26 @@
         background-color: #f7fafc !important;
         color: #2d3748 !important;
         border-bottom-left-radius: 4px !important;
+        line-height: 1.5 !important;
+    }
+
+    .message.bot strong {
+        font-weight: 600 !important;
+        color: #1a202c !important;
+    }
+
+    .message.bot em {
+        font-style: italic !important;
+        color: #4a5568 !important;
+    }
+
+    .message.bot blockquote {
+        margin: 0.5rem 0 !important;
+        padding: 0.5rem !important;
+        background-color: #e2e8f0 !important;
+        border-left: 4px solid #3182ce !important;
+        border-radius: 4px !important;
+        font-style: italic !important;
     }
 
     .typing-indicator {
@@ -456,7 +476,21 @@
         
         const messageDiv = document.createElement('div');
         messageDiv.className = `message ${type}`;
-        messageDiv.textContent = text;
+        
+        // Gestion du formatage pour les réponses du bot
+        if (type === 'bot') {
+            // Conversion simple du formatage markdown
+            let formattedText = text
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // **texte** -> <strong>texte</strong>
+                .replace(/\*(.*?)\*/g, '<em>$1</em>') // *texte* -> <em>texte</em>
+                .replace(/- (.*)/g, '• $1') // - item -> • item
+                .replace(/\n/g, '<br>') // \n -> <br>
+                .replace(/> (.*)/g, '<blockquote>$1</blockquote>'); // > texte -> <blockquote>texte</blockquote>
+            
+            messageDiv.innerHTML = formattedText;
+        } else {
+            messageDiv.textContent = text;
+        }
         
         messagesContainer.appendChild(messageDiv);
         messageCounter++;
@@ -514,7 +548,28 @@
             
             if (response.ok) {
                 const data = await response.json();
-                addMessage(data.response || data.message || 'Merci pour votre message. Notre équipe vous répondra rapidement.', 'bot');
+                
+                // Extraction de la réponse depuis votre webhook n8n
+                let botResponse = 'Merci pour votre message. Notre équipe vous répondra rapidement.';
+                
+                if (Array.isArray(data) && data.length > 0 && data[0].output) {
+                    // Format n8n avec tableau et propriété output
+                    botResponse = data[0].output;
+                } else if (data.output) {
+                    // Format direct avec propriété output
+                    botResponse = data.output;
+                } else if (data.response) {
+                    // Format avec propriété response
+                    botResponse = data.response;
+                } else if (data.message) {
+                    // Format avec propriété message
+                    botResponse = data.message;
+                } else if (typeof data === 'string') {
+                    // Réponse directe en string
+                    botResponse = data;
+                }
+                
+                addMessage(botResponse, 'bot');
             } else {
                 throw new Error('Erreur de connexion');
             }
