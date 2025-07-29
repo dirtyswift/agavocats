@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Chatbot</title>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <style>
+        .chatbot-container {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 9999;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        .chatbot-toggle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3182ce, #2d3748);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+            color: white;
+            font-size: 1.5rem;
+            z-index: 9999;
+        }
+
+        .test-button {
+            background: red;
+            color: white;
+            padding: 20px;
+            position: fixed;
+            top: 50px;
+            right: 50px;
+            z-index: 10000;
+        }
+    </style>
+</head>
+<body>
+    <h1>Test du Chatbot</h1>
+    
+    <button class="test-button" x-data="{ count: 0 }" x-text="'Clicks: ' + count" @click="count++">
+        Test Alpine.js
+    </button>
+
+    <!-- Chatbot -->
+    <div class="chatbot-container" x-data="chatbot()">
+        <button class="chatbot-toggle" @click="toggleChat()" :class="{ 'active': isOpen }">
+            <span x-show="!isOpen">💬</span>
+            <span x-show="isOpen">✕</span>
+        </button>
+    </div>
+
+    <script>
+        function chatbot() {
+            return {
+                isOpen: false,
+                toggleChat() {
+                    this.isOpen = !this.isOpen;
+                    console.log('Chat toggled:', this.isOpen);
+                }
+            };
+        }
+    </script>
+</body>
+</html>

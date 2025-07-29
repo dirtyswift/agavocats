@@ -130,8 +130,8 @@ function initializeContactForm() {
     }
 }
 
-// Chatbot Alpine.js data function
-function chatbot() {
+// Expose chatbot function globally for Alpine.js
+window.chatbot = function() {
     return {
         isOpen: false,
         isTyping: false,
@@ -212,8 +212,8 @@ function chatbot() {
     };
 }
 
-// Contact form Alpine.js data function
-function contactForm() {
+// Expose contactForm function globally for Alpine.js
+window.contactForm = function() {
     return {
         formData: {
             name: '',
