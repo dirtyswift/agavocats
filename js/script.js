@@ -144,7 +144,9 @@ window.chatbot = function() {
             this.isOpen = !this.isOpen;
             if (this.isOpen) {
                 this.$nextTick(() => {
-                    this.$refs.messages.scrollTop = this.$refs.messages.scrollHeight;
+                    if (this.$refs.messages) {
+                        this.$refs.messages.scrollTop = this.$refs.messages.scrollHeight;
+                    }
                 });
             }
         },
@@ -192,7 +194,9 @@ window.chatbot = function() {
             } finally {
                 this.isTyping = false;
                 this.$nextTick(() => {
-                    this.$refs.messages.scrollTop = this.$refs.messages.scrollHeight;
+                    if (this.$refs.messages) {
+                        this.$refs.messages.scrollTop = this.$refs.messages.scrollHeight;
+                    }
                 });
             }
         },
@@ -206,7 +210,9 @@ window.chatbot = function() {
             });
             
             this.$nextTick(() => {
-                this.$refs.messages.scrollTop = this.$refs.messages.scrollHeight;
+                if (this.$refs.messages) {
+                    this.$refs.messages.scrollTop = this.$refs.messages.scrollHeight;
+                }
             });
         }
     };
