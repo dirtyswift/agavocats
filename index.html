@@ -26,34 +26,34 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
 </head>
 <body>
     <!-- Cookie Banner -->
-    <div id="cookie-banner" class="cookie-banner" x-data="{ show: true }" x-show="show" x-transition>
+    <div id="cookie-banner" class="cookie-banner">
         <div class="cookie-content">
             <p>Ce site utilise des cookies pour améliorer votre expérience. En continuant, vous acceptez notre utilisation des cookies.</p>
-            <button @click="show = false" class="cookie-accept">J'accepte</button>
+            <button class="cookie-accept">J'accepte</button>
         </div>
     </div>
 
     <!-- Header -->
     <header class="header">
-        <nav class="navbar" x-data="{ open: false }">
+        <nav class="navbar">
             <div class="container">
                 <div class="nav-brand">
                     <a href="index.html" class="logo">AG AVOCATS</a>
                 </div>
-                <button class="nav-toggle" @click="open = !open" :class="{ 'active': open }">
+                <button class="nav-toggle">
                     <span></span>
                     <span></span>
                     <span></span>
                 </button>
-                <ul class="nav-menu" :class="{ 'active': open }">
+                <ul class="nav-menu">
                     <li><a href="index.html" class="nav-link active">Accueil</a></li>
-                    <li class="dropdown" x-data="{ open: false }">
-                        <a href="#" class="nav-link" @click="open = !open">Expertises</a>
-                        <ul class="dropdown-menu" :class="{ 'active': open }">
+                    <li class="dropdown">
+                        <a href="#" class="nav-link">Expertises</a>
+                        <ul class="dropdown-menu">
                             <li><a href="baux-commerciaux.html">Baux commerciaux</a></li>
                             <li><a href="contentieux-commercial.html">Contentieux commercial</a></li>
                             <li><a href="droit-franchise.html">Droit de la franchise</a></li>
