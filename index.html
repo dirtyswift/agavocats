@@ -208,7 +208,7 @@
     </footer>
 
     <!-- Chatbot -->
-    <div style="position: fixed; bottom: 2rem; right: 2rem; z-index: 9999; font-family: 'Open Sans', sans-serif;" x-data="{
+    <div style="position: fixed; bottom: 20px; right: 20px; z-index: 999999; font-family: 'Open Sans', sans-serif;" x-data="{
         isOpen: false,
         isTyping: false,
         currentMessage: '',
@@ -290,7 +290,7 @@
             <span x-show="isOpen">✕</span>
         </button>
         
-        <div style="position: absolute; bottom: 80px; right: 0; width: 350px; height: 500px; background: white; border-radius: 12px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15); border: 1px solid #e2e8f0; opacity: 0; visibility: hidden; transform: translateY(20px) scale(0.9); transition: all 0.3s ease;" :style="isOpen ? 'opacity: 1; visibility: visible; transform: translateY(0) scale(1);' : ''">
+        <div style="position: fixed; bottom: 100px; right: 20px; width: 90vw; max-width: 350px; height: 500px; max-height: 80vh; background: white; border-radius: 12px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15); border: 1px solid #e2e8f0; transition: all 0.3s ease; z-index: 999998;" :style="isOpen ? 'opacity: 1; visibility: visible; transform: translateY(0) scale(1); pointer-events: auto;' : 'opacity: 0; visibility: hidden; transform: translateY(20px) scale(0.9); pointer-events: none;'">
             <div style="background: linear-gradient(135deg, #2d3748, #4a5568); color: white; padding: 1rem; border-radius: 12px 12px 0 0; display: flex; align-items: center; justify-content: space-between;">
                 <h3 style="font-weight: 600; font-size: 1rem; margin: 0;">Assistant Juridique AG AVOCATS</h3>
                 <button style="background: none; border: none; color: white; font-size: 1.25rem; cursor: pointer; padding: 0; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: background-color 0.2s ease;" @click="closeChat()" @mouseover="$el.style.backgroundColor='rgba(255, 255, 255, 0.2)'" @mouseout="$el.style.backgroundColor='transparent'">✕</button>
