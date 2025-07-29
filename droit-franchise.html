@@ -228,6 +228,55 @@
         </div>
     </footer>
 
+    <!-- Chatbot -->
+    <div class="chatbot-container" x-data="chatbot()">
+        <button class="chatbot-toggle" @click="toggleChat()" :class="{ 'active': isOpen }">
+            <span x-show="!isOpen">💬</span>
+            <span x-show="isOpen">✕</span>
+        </button>
+        
+        <div class="chatbot-window" :class="{ 'active': isOpen }">
+            <div class="chatbot-header">
+                <h3 class="chatbot-title">Assistant Juridique AG AVOCATS</h3>
+                <button class="chatbot-close" @click="closeChat()">✕</button>
+            </div>
+            
+            <div class="chatbot-messages" x-ref="messages">
+                <div class="chatbot-welcome" x-show="messages.length === 0">
+                    👋 Bonjour ! Je suis votre assistant juridique. Posez-moi vos questions sur nos domaines d'expertise.
+                </div>
+                
+                <template x-for="message in messages" :key="message.id">
+                    <div class="chatbot-message" :class="message.type">
+                        <span x-text="message.text"></span>
+                    </div>
+                </template>
+                
+                <div x-show="isTyping" class="chatbot-message typing">
+                    L'assistant est en train d'écrire...
+                </div>
+            </div>
+            
+            <div class="chatbot-input-container">
+                <input 
+                    type="text" 
+                    class="chatbot-input" 
+                    placeholder="Tapez votre question..."
+                    x-model="currentMessage"
+                    @keydown.enter="sendMessage()"
+                    :disabled="isTyping"
+                >
+                <button 
+                    class="chatbot-send" 
+                    @click="sendMessage()"
+                    :disabled="isTyping || !currentMessage.trim()"
+                >
+                    Envoyer
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script src="js/script.js"></script>
 </body>
 </html>

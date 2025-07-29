@@ -130,6 +130,88 @@ function initializeContactForm() {
     }
 }
 
+// Chatbot Alpine.js data function
+function chatbot() {
+    return {
+        isOpen: false,
+        isTyping: false,
+        currentMessage: '',
+        messages: [],
+        messageIdCounter: 0,
+        webhookUrl: 'https://n8n.srv751142.hstgr.cloud/webhook/84c6ee00-ab5e-4c23-8b88-a2ee36b84c6f',
+        
+        toggleChat() {
+            this.isOpen = !this.isOpen;
+            if (this.isOpen) {
+                this.$nextTick(() => {
+                    this.$refs.messages.scrollTop = this.$refs.messages.scrollHeight;
+                });
+            }
+        },
+        
+        closeChat() {
+            this.isOpen = false;
+        },
+        
+        async sendMessage() {
+            if (!this.currentMessage.trim() || this.isTyping) return;
+            
+            const userMessage = this.currentMessage.trim();
+            this.addMessage(userMessage, 'user');
+            this.currentMessage = '';
+            this.isTyping = true;
+            
+            try {
+                const response = await fetch(this.webhookUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        message: userMessage,
+                        timestamp: new Date().toISOString(),
+                        source: 'website_chatbot'
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                const botResponse = data.response || data.message || 'Je suis désolé, je n\'ai pas pu traiter votre demande. Veuillez réessayer ou nous contacter directement.';
+                
+                this.addMessage(botResponse, 'bot');
+                
+            } catch (error) {
+                console.error('Erreur lors de l\'envoi du message:', error);
+                
+                // Message d'erreur de secours
+                const fallbackMessage = 'Je rencontre actuellement des difficultés techniques. Pour une assistance immédiate, veuillez nous contacter directement à contact@cabinetag.com ou utiliser notre formulaire de contact.';
+                this.addMessage(fallbackMessage, 'bot');
+            } finally {
+                this.isTyping = false;
+                this.$nextTick(() => {
+                    this.$refs.messages.scrollTop = this.$refs.messages.scrollHeight;
+                });
+            }
+        },
+        
+        addMessage(text, type) {
+            this.messages.push({
+                id: ++this.messageIdCounter,
+                text: text,
+                type: type,
+                timestamp: new Date()
+            });
+            
+            this.$nextTick(() => {
+                this.$refs.messages.scrollTop = this.$refs.messages.scrollHeight;
+            });
+        }
+    };
+}
+
 // Contact form Alpine.js data function
 function contactForm() {
     return {

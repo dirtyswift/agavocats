@@ -53,6 +53,10 @@ This is a static website architecture with the following characteristics:
 - Dropdown menus
 - Form handling (contact forms)
 - Smooth scrolling behavior
+- AI-powered chatbot with webhook integration
+- Chatbot appears on all pages as floating button
+- Real-time messaging with typing indicators
+- Webhook endpoint: https://n8n.srv751142.hstgr.cloud/webhook/84c6ee00-ab5e-4c23-8b88-a2ee36b84c6f
 
 ## Data Flow
 
