@@ -3,7 +3,7 @@ cmd = "npm start"
 
 [deployment]
 build = ["npm", "install", "--production"]
-run = ["node", "server.js"]
+run = ["npm", "start"]
 deploymentTarget = "autoscale"
 ignorePorts = false
 publicDir = "."
