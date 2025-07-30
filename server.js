@@ -3,11 +3,15 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// Ensure the server binds to the correct host for deployment
+const HOST = process.env.HOST || '0.0.0.0';
+
 // Security headers
 app.use((req, res, next) => {
     res.setHeader('X-Content-Type-Options', 'nosniff');
     res.setHeader('X-Frame-Options', 'DENY');
     res.setHeader('X-XSS-Protection', '1; mode=block');
+    res.setHeader('X-Powered-By', 'AG AVOCATS Website');
     next();
 });
 
@@ -31,7 +35,8 @@ app.get('/health', (req, res) => {
         timestamp: new Date().toISOString(),
         environment: process.env.NODE_ENV || 'development',
         port: PORT,
-        uptime: process.uptime()
+        uptime: process.uptime(),
+        service: 'AG AVOCATS website'
     });
 });
 
@@ -40,8 +45,20 @@ app.get('/healthz', (req, res) => {
     res.status(200).send('OK');
 });
 
+app.get('/healthcheck', (req, res) => {
+    res.status(200).json({ status: 'healthy' });
+});
+
 app.get('/ping', (req, res) => {
     res.status(200).send('pong');
+});
+
+app.get('/status', (req, res) => {
+    res.status(200).json({ 
+        status: 'running',
+        timestamp: new Date().toISOString(),
+        service: 'AG AVOCATS website'
+    });
 });
 
 // Root route
@@ -90,8 +107,26 @@ app.use((err, req, res, next) => {
     res.status(500).json({ error: 'Internal server error' });
 });
 
-app.listen(PORT, '0.0.0.0', () => {
-    console.log(`AG AVOCATS website server running on http://0.0.0.0:${PORT}`);
-    console.log(`Health check available at http://0.0.0.0:${PORT}/health`);
+// Graceful shutdown handling
+process.on('SIGTERM', () => {
+    console.log('SIGTERM received, shutting down gracefully');
+    process.exit(0);
+});
+
+process.on('SIGINT', () => {
+    console.log('SIGINT received, shutting down gracefully');
+    process.exit(0);
+});
+
+const server = app.listen(PORT, HOST, () => {
+    console.log(`AG AVOCATS website server running on http://${HOST}:${PORT}`);
+    console.log(`Health check available at http://${HOST}:${PORT}/health`);
     console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+    console.log(`Server ready for deployment`);
+});
+
+// Handle server errors
+server.on('error', (err) => {
+    console.error('Server error:', err);
+    process.exit(1);
 });

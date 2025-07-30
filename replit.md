@@ -86,10 +86,20 @@ This is a static website architecture with the following characteristics:
 
 ## Deployment Strategy
 
-### Static Hosting
-- Designed for static hosting platforms (Netlify, Vercel, GitHub Pages)
-- No server-side processing required
-- All assets served directly from CDN or static files
+### Express.js Web Server (Current Implementation)
+- Node.js Express server serving static files with proper HTTP response handling
+- Multiple health check endpoints for deployment system compatibility:
+  - `/health` - Detailed JSON health status
+  - `/healthz` - Simple OK response  
+  - `/healthcheck` - JSON healthy status
+  - `/status` - Service status information
+- Graceful shutdown handling for production deployments
+- Configured for Replit autoscale deployment with proper host binding (0.0.0.0)
+
+### Alternative Static Hosting
+- Can also be deployed on static hosting platforms (Netlify, Vercel, GitHub Pages)
+- All assets can be served directly from CDN or static files
+- Express server provides additional functionality and deployment reliability
 
 ### Performance Optimization
 - Preconnect hints for external resources
@@ -108,6 +118,17 @@ This is a static website architecture with the following characteristics:
 - CSS custom properties with fallbacks
 - Progressive enhancement approach
 - Responsive design for all device types
+
+## Recent Changes
+
+### Deployment Fixes (July 30, 2025)
+- Updated deployment configuration from cloudrun to autoscale for better compatibility
+- Enhanced health check endpoints with multiple routes (/health, /healthz, /healthcheck, /status)
+- Added graceful shutdown handling for production deployments
+- Improved Express server configuration with proper host binding (0.0.0.0)
+- Added detailed service identification in health responses
+- Configured environment variables for deployment (HOST, PORT, NODE_ENV)
+- Ensured Procfile and start.sh scripts are properly configured
 
 ## Development Notes
 
