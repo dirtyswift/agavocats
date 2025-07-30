@@ -26,7 +26,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
 </head>
 <body>
@@ -39,29 +38,29 @@
     </div>
 
     <!-- Header -->
-    <header class="header" x-data="{ mobileMenu: false, expertiseDropdown: false }">
+    <header class="header">
         <nav class="navbar">
             <div class="container">
                 <div class="nav-brand">
                     <a href="index.html" class="logo">AG AVOCATS</a>
                 </div>
-                <button class="nav-toggle" @click="mobileMenu = !mobileMenu" :class="{ 'active': mobileMenu }">
+                <button class="nav-toggle">
                     <span></span>
                     <span></span>
                     <span></span>
                 </button>
-                <ul class="nav-menu" :class="{ 'active': mobileMenu }">
+                <ul class="nav-menu">
                     <li><a href="index.html" class="nav-link active">Accueil</a></li>
                     <li class="dropdown">
-                        <a href="#" class="nav-link" @click="expertiseDropdown = !expertiseDropdown">Expertises</a>
-                        <ul class="dropdown-menu" :class="{ 'active': expertiseDropdown }">
+                        <a href="#" class="nav-link">Expertises</a>
+                        <ul class="dropdown-menu">
                             <li><a href="baux-commerciaux.html">Baux commerciaux</a></li>
                             <li><a href="contentieux-commercial.html">Contentieux commercial</a></li>
                             <li><a href="droit-franchise.html">Droit de la franchise</a></li>
                             <li><a href="droit-contrats.html">Droit des contrats</a></li>
                         </ul>
                     </li>
-                    <li><a href="#" class="nav-link" @click="$store.global.contactModal = true; mobileMenu = false">Contact</a></li>
+                    <li><a href="#" class="nav-link" onclick="openContactModal()">Contact</a></li>
                 </ul>
             </div>
         </nav>
@@ -73,7 +72,7 @@
                 <h1 class="hero-title">AG AVOCATS</h1>
                 <p class="hero-subtitle">Conseil stratégique & défense des entreprises</p>
                 <p class="hero-description">Une vision claire du droit des affaires</p>
-                <button class="cta-button" @click="$store.global.contactModal = true">Prendre rendez-vous</button>
+                <button class="cta-button" onclick="openContactModal()">Prendre rendez-vous</button>
             </div>
         </div>
     </section>
@@ -587,38 +586,36 @@
     </script>
 
     <!-- Contact Modal -->
-    <div x-data="contactForm()" x-show="$store.global.contactModal" x-transition.opacity class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" style="display: none;" @click="$store.global.contactModal = false">
-        <div class="contact-modal bg-white rounded-lg max-w-4xl w-full mx-4 max-h-screen overflow-y-auto" @click.stop>
-            <div class="modal-header flex justify-between items-center p-6 border-b">
-                <h2 class="text-2xl font-bold text-gray-800">Contactez-nous</h2>
-                <button @click="$store.global.contactModal = false" class="text-gray-500 hover:text-gray-700 text-2xl">×</button>
+    <div id="contactModal" class="contact-modal-overlay" style="display: none;">
+        <div class="contact-modal">
+            <div class="modal-header">
+                <h2>Contactez-nous</h2>
+                <button class="close-btn" onclick="closeContactModal()">×</button>
             </div>
-            
-            <div class="modal-body p-6">
-                <div class="grid md:grid-cols-2 gap-8">
-                    <!-- Formulaire de contact -->
-                    <div class="contact-form-section">
-                        <h3 class="text-xl font-semibold mb-4">Demande de consultation</h3>
-                        <form class="contact-form" @submit.prevent="submitForm">
-                            <div class="form-group mb-4">
-                                <label for="modal-name" class="block text-sm font-medium text-gray-700 mb-2">Nom complet *</label>
-                                <input type="text" id="modal-name" name="name" x-model="formData.name" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <div class="modal-content">
+                <div class="modal-grid">
+                    <div class="form-section">
+                        <h3>Demande de consultation</h3>
+                        <form id="contactForm" onsubmit="submitContactForm(event)">
+                            <div class="form-group">
+                                <label>Nom complet *</label>
+                                <input type="text" name="name" required>
                             </div>
-                            <div class="form-group mb-4">
-                                <label for="modal-email" class="block text-sm font-medium text-gray-700 mb-2">Email *</label>
-                                <input type="email" id="modal-email" name="email" x-model="formData.email" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <div class="form-group">
+                                <label>Email *</label>
+                                <input type="email" name="email" required>
                             </div>
-                            <div class="form-group mb-4">
-                                <label for="modal-phone" class="block text-sm font-medium text-gray-700 mb-2">Téléphone</label>
-                                <input type="tel" id="modal-phone" name="phone" x-model="formData.phone" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <div class="form-group">
+                                <label>Téléphone</label>
+                                <input type="tel" name="phone">
                             </div>
-                            <div class="form-group mb-4">
-                                <label for="modal-company" class="block text-sm font-medium text-gray-700 mb-2">Entreprise</label>
-                                <input type="text" id="modal-company" name="company" x-model="formData.company" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <div class="form-group">
+                                <label>Entreprise</label>
+                                <input type="text" name="company">
                             </div>
-                            <div class="form-group mb-4">
-                                <label for="modal-subject" class="block text-sm font-medium text-gray-700 mb-2">Domaine d'expertise *</label>
-                                <select id="modal-subject" name="subject" x-model="formData.subject" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <div class="form-group">
+                                <label>Domaine d'expertise *</label>
+                                <select name="subject" required>
                                     <option value="">Sélectionnez un domaine</option>
                                     <option value="baux-commerciaux">Baux commerciaux</option>
                                     <option value="contentieux-commercial">Contentieux commercial</option>
@@ -627,74 +624,38 @@
                                     <option value="autre">Autre</option>
                                 </select>
                             </div>
-                            <div class="form-group mb-4">
-                                <label for="modal-message" class="block text-sm font-medium text-gray-700 mb-2">Message *</label>
-                                <textarea id="modal-message" name="message" rows="4" x-model="formData.message" required placeholder="Décrivez brièvement votre demande..." class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                            <div class="form-group">
+                                <label>Message *</label>
+                                <textarea name="message" required placeholder="Décrivez brièvement votre demande..."></textarea>
                             </div>
-                            <div class="form-group mb-6">
-                                <label class="flex items-start space-x-2">
-                                    <input type="checkbox" x-model="formData.consent" required class="mt-1">
-                                    <span class="text-sm text-gray-700">J'accepte que mes données soient utilisées pour me recontacter dans le cadre de ma demande *</span>
+                            <div class="form-group checkbox-group">
+                                <label>
+                                    <input type="checkbox" name="consent" required>
+                                    J'accepte que mes données soient utilisées pour me recontacter dans le cadre de ma demande *
                                 </label>
                             </div>
-                            <button type="submit" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-200" :disabled="isSubmitting">
-                                <span x-show="!isSubmitting">Envoyer la demande</span>
-                                <span x-show="isSubmitting">Envoi en cours...</span>
-                            </button>
+                            <button type="submit" class="submit-btn">Envoyer la demande</button>
                         </form>
                     </div>
-
-                    <!-- Informations de contact -->
-                    <div class="contact-info-section">
-                        <h3 class="text-xl font-semibold mb-4">Informations de contact</h3>
-                        <div class="space-y-6">
-                            <div class="flex items-start space-x-3">
-                                <div class="flex-shrink-0 w-6 h-6 text-blue-600">
-                                    <svg fill="currentColor" viewBox="0 0 24 24">
-                                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                                        <polyline points="22,6 12,13 2,6"></polyline>
-                                    </svg>
-                                </div>
-                                <div>
-                                    <h4 class="font-medium text-gray-900">Email</h4>
-                                    <p class="text-gray-600"><a href="mailto:contact@cabinetag.com" class="text-blue-600 hover:underline">contact@cabinetag.com</a></p>
-                                </div>
+                    <div class="info-section">
+                        <h3>Informations de contact</h3>
+                        <div class="contact-info">
+                            <div class="info-item">
+                                <strong>Email</strong>
+                                <p><a href="mailto:contact@cabinetag.com">contact@cabinetag.com</a></p>
                             </div>
-                            <div class="flex items-start space-x-3">
-                                <div class="flex-shrink-0 w-6 h-6 text-blue-600">
-                                    <svg fill="currentColor" viewBox="0 0 24 24">
-                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                                        <circle cx="12" cy="10" r="3"></circle>
-                                    </svg>
-                                </div>
-                                <div>
-                                    <h4 class="font-medium text-gray-900">Adresse</h4>
-                                    <p class="text-gray-600">Cabinet AG AVOCATS<br>Paris, France</p>
-                                </div>
+                            <div class="info-item">
+                                <strong>Adresse</strong>
+                                <p>Cabinet AG AVOCATS<br>Paris, France</p>
                             </div>
-                            <div class="flex items-start space-x-3">
-                                <div class="flex-shrink-0 w-6 h-6 text-blue-600">
-                                    <svg fill="currentColor" viewBox="0 0 24 24">
-                                        <circle cx="12" cy="12" r="10"></circle>
-                                        <polyline points="12,6 12,12 16,14"></polyline>
-                                    </svg>
-                                </div>
-                                <div>
-                                    <h4 class="font-medium text-gray-900">Horaires</h4>
-                                    <p class="text-gray-600">Lundi - Vendredi<br>9h00 - 18h00</p>
-                                </div>
+                            <div class="info-item">
+                                <strong>Horaires</strong>
+                                <p>Lundi - Vendredi<br>9h00 - 18h00</p>
                             </div>
                         </div>
-
-                        <div class="mt-6 p-4 bg-gray-50 rounded-lg">
-                            <h4 class="font-medium text-gray-900 mb-2">Première consultation</h4>
-                            <p class="text-sm text-gray-600 mb-2">Nous proposons une première consultation pour évaluer votre situation et vous présenter nos solutions.</p>
-                            <ul class="text-sm text-gray-600 space-y-1">
-                                <li>• Comprendre vos enjeux spécifiques</li>
-                                <li>• Analyser votre situation juridique</li>
-                                <li>• Vous proposer une stratégie adaptée</li>
-                                <li>• Vous fournir un devis détaillé</li>
-                            </ul>
+                        <div class="consultation-note">
+                            <h4>Première consultation</h4>
+                            <p>Nous proposons une première consultation pour évaluer votre situation et vous présenter nos solutions.</p>
                         </div>
                     </div>
                 </div>
@@ -703,66 +664,59 @@
     </div>
 
     <script>
-    // Store global Alpine.js pour gérer l'état de la modal
-    document.addEventListener('alpine:init', () => {
-        Alpine.store('global', {
-            contactModal: false
-        });
+    // Fonctions pour la modal de contact
+    function openContactModal() {
+        document.getElementById('contactModal').style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeContactModal() {
+        document.getElementById('contactModal').style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+
+    // Fermer la modal en cliquant à l'extérieur
+    document.getElementById('contactModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeContactModal();
+        }
     });
 
-    // Fonction pour le formulaire de contact
-    function contactForm() {
-        return {
-            formData: {
-                name: '',
-                email: '',
-                phone: '',
-                company: '',
-                subject: '',
-                message: '',
-                consent: false
-            },
-            isSubmitting: false,
+    // Soumettre le formulaire
+    async function submitContactForm(event) {
+        event.preventDefault();
+        const form = event.target;
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData);
+        
+        const submitBtn = form.querySelector('.submit-btn');
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Envoi en cours...';
+        submitBtn.disabled = true;
+        
+        try {
+            const response = await fetch('/api/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            });
             
-            async submitForm() {
-                this.isSubmitting = true;
-                
-                try {
-                    const response = await fetch('/api/contact', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(this.formData)
-                    });
-                    
-                    if (response.ok) {
-                        alert('Votre demande a été envoyée avec succès ! Nous vous recontacterons rapidement.');
-                        this.resetForm();
-                        Alpine.store('global').contactModal = false;
-                    } else {
-                        throw new Error('Erreur lors de l\'envoi');
-                    }
-                } catch (error) {
-                    console.error('Erreur:', error);
-                    alert('Une erreur est survenue. Veuillez réessayer ou nous contacter directement.');
-                } finally {
-                    this.isSubmitting = false;
-                }
-            },
-            
-            resetForm() {
-                this.formData = {
-                    name: '',
-                    email: '',
-                    phone: '',
-                    company: '',
-                    subject: '',
-                    message: '',
-                    consent: false
-                };
+            if (response.ok) {
+                alert('Votre demande a été envoyée avec succès ! Nous vous recontacterons rapidement.');
+                form.reset();
+                closeContactModal();
+            } else {
+                throw new Error('Erreur lors de l\'envoi');
             }
-        };
+        } catch (error) {
+            console.error('Erreur:', error);
+            alert('Une erreur est survenue. Veuillez réessayer ou nous contacter directement.');
+        } finally {
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+        }
     }
     </script>
 
