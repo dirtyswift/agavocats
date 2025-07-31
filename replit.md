@@ -121,6 +121,16 @@ This is a static website architecture with the following characteristics:
 
 ## Recent Changes
 
+### Blog System Implementation (July 31, 2025)
+- Added complete blog system with Google Sheets integration
+- Created blog listing page (blog.html) with responsive design
+- Built individual article pages (article.html) with SEO optimization
+- Implemented Google Sheets API integration via Sheet.best service
+- Added dynamic content loading, category filtering, and sidebar widgets
+- Enhanced navigation with Blog menu item
+- Created comprehensive documentation and setup guide
+- Updated sitemap.xml to include blog pages
+
 ### Deployment Fixes (July 30, 2025)
 - Updated deployment configuration from cloudrun to autoscale for better compatibility
 - Enhanced health check endpoints with multiple routes (/health, /healthz, /healthcheck, /status)

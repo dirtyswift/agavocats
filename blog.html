@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Blog juridique du cabinet AG AVOCATS - Articles et actualités en droit commercial, baux commerciaux, contentieux et franchise">
+    <meta name="keywords" content="blog juridique, droit commercial, actualités juridiques, AG AVOCATS">
+    <meta name="author" content="AG AVOCATS">
+    
+    <meta property="og:title" content="Blog - AG AVOCATS">
+    <meta property="og:description" content="Articles et actualités juridiques du cabinet AG AVOCATS">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.cabinetag.com/blog">
+    
+    <title>Blog - AG AVOCATS | Articles juridiques et actualités</title>
+    
+    <link rel="canonical" href="https://www.cabinetag.com/blog">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/blog.css">
+</head>
+
+<body>
+    <!-- Cookie Banner -->
+    <div id="cookie-banner" class="cookie-banner">
+        <div class="cookie-content">
+            <p>Ce site utilise des cookies pour améliorer votre expérience. En continuant, vous acceptez notre utilisation des cookies.</p>
+            <button class="cookie-accept">J'accepte</button>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-brand">
+                    <a href="index.html" class="logo">AG AVOCATS</a>
+                </div>
+                <button class="nav-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link">Accueil</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="nav-link">Expertises</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="baux-commerciaux.html">Baux commerciaux</a></li>
+                            <li><a href="contentieux-commercial.html">Contentieux commercial</a></li>
+                            <li><a href="droit-franchise.html">Droit de la franchise</a></li>
+                            <li><a href="droit-contrats.html">Droit des contrats</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="blog.html" class="nav-link active">Blog</a></li>
+                    <li><a href="#" class="nav-link" onclick="openContactModal()">Contact</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Blog Hero Section -->
+    <section class="blog-hero">
+        <div class="container">
+            <h1>Blog juridique</h1>
+            <p>Actualités, analyses et conseils en droit commercial</p>
+        </div>
+    </section>
+
+    <!-- Blog Content -->
+    <main class="blog-main">
+        <div class="container">
+            <div class="blog-layout">
+                <!-- Articles List -->
+                <div class="blog-content">
+                    <div id="loading" class="loading">
+                        <p>Chargement des articles...</p>
+                    </div>
+                    <div id="articles-container" class="articles-grid" style="display: none;">
+                        <!-- Articles will be loaded here -->
+                    </div>
+                    <div id="error-message" class="error-message" style="display: none;">
+                        <p>Erreur lors du chargement des articles. Veuillez réessayer plus tard.</p>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <aside class="blog-sidebar">
+                    <div class="sidebar-widget">
+                        <h3>Catégories</h3>
+                        <ul id="categories-list" class="categories-list">
+                            <!-- Categories will be loaded here -->
+                        </ul>
+                    </div>
+                    
+                    <div class="sidebar-widget">
+                        <h3>Articles récents</h3>
+                        <div id="recent-articles" class="recent-articles">
+                            <!-- Recent articles will be loaded here -->
+                        </div>
+                    </div>
+
+                    <div class="sidebar-widget">
+                        <h3>Besoin d'un conseil ?</h3>
+                        <p>Contactez-nous pour une consultation personnalisée.</p>
+                        <button class="cta-button" onclick="openContactModal()">Nous contacter</button>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>AG AVOCATS</h3>
+                    <p>Cabinet d'avocat spécialisé en droit commercial</p>
+                    <p>Conseil stratégique & défense des entreprises</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Nos expertises</h4>
+                    <ul>
+                        <li><a href="baux-commerciaux.html">Baux commerciaux</a></li>
+                        <li><a href="contentieux-commercial.html">Contentieux commercial</a></li>
+                        <li><a href="droit-franchise.html">Droit de la franchise</a></li>
+                        <li><a href="droit-contrats.html">Droit des contrats</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>Email: <a href="mailto:contact@cabinetag.com">contact@cabinetag.com</a></p>
+                    <p><a href="#" onclick="openContactModal()">Prendre rendez-vous</a></p>
+                </div>
+                <div class="footer-section">
+                    <h4>Informations légales</h4>
+                    <ul>
+                        <li><a href="mentions-legales.html">Mentions légales</a></li>
+                        <li><a href="mentions-legales.html#protection-donnees">Protection des données</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 AG AVOCATS. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Contact Modal -->
+    <div id="contactModal" class="contact-modal-overlay" style="display: none;">
+        <div class="contact-modal">
+            <div class="modal-header">
+                <h2>Contactez-nous</h2>
+                <button class="close-btn" onclick="closeContactModal()">×</button>
+            </div>
+            <div class="modal-content">
+                <div class="modal-grid">
+                    <div class="form-section">
+                        <h3>Demande de consultation</h3>
+                        <form id="contactForm" onsubmit="submitContactForm(event)">
+                            <div class="form-group">
+                                <label>Nom complet *</label>
+                                <input type="text" name="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Email *</label>
+                                <input type="email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Téléphone</label>
+                                <input type="tel" name="phone">
+                            </div>
+                            <div class="form-group">
+                                <label>Entreprise</label>
+                                <input type="text" name="company">
+                            </div>
+                            <div class="form-group">
+                                <label>Domaine d'expertise *</label>
+                                <select name="subject" required>
+                                    <option value="">Sélectionnez un domaine</option>
+                                    <option value="Baux commerciaux">Baux commerciaux</option>
+                                    <option value="Contentieux commercial">Contentieux commercial</option>
+                                    <option value="Droit de la franchise">Droit de la franchise</option>
+                                    <option value="Droit des contrats">Droit des contrats</option>
+                                    <option value="Autre">Autre</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Préférence de contact *</label>
+                                <select name="preference" required>
+                                    <option value="">Comment préférez-vous être contacté ?</option>
+                                    <option value="Email">Email</option>
+                                    <option value="Téléphone">Téléphone</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Message *</label>
+                                <textarea name="message" required placeholder="Décrivez brièvement votre demande..."></textarea>
+                            </div>
+                            <div class="form-group checkbox-group">
+                                <label>
+                                    <input type="checkbox" name="consent" required>
+                                    J'accepte que mes données soient utilisées pour me recontacter dans le cadre de ma demande *
+                                </label>
+                            </div>
+                            <button type="submit" class="submit-btn">Envoyer la demande</button>
+                        </form>
+                    </div>
+                    <div class="info-section">
+                        <h3>Informations de contact</h3>
+                        <div class="contact-info">
+                            <div class="info-item">
+                                <strong>Email</strong>
+                                <p><a href="mailto:contact@cabinetag.com">contact@cabinetag.com</a></p>
+                            </div>
+                            <div class="info-item">
+                                <strong>Adresse</strong>
+                                <p>Cabinet AG AVOCATS<br>Paris, France</p>
+                            </div>
+                            <div class="info-item">
+                                <strong>Horaires</strong>
+                                <p>Lundi - Vendredi<br>9h00 - 18h00</p>
+                            </div>
+                        </div>
+                        <div class="consultation-note">
+                            <h4>Première consultation</h4>
+                            <p>Nous proposons une première consultation pour évaluer votre situation et vous présenter nos solutions.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/blog.js"></script>
+    <script src="js/common.js"></script>
+</body>
+</html>
