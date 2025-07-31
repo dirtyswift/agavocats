@@ -7,6 +7,8 @@ run = ["npm", "start"]
 deploymentTarget = "autoscale"
 ignorePorts = false
 publicDir = "."
+replitPorts = false
+autoscale = true
 
 [env]
 NODE_ENV = "production"

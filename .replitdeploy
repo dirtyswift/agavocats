@@ -2,6 +2,8 @@
 build = ["npm", "install", "--production"]
 run = ["npm", "start"]
 deploymentTarget = "autoscale"
+ignorePorts = false
+autoscale = true
 
 [secrets]
 NODE_ENV = "production"
