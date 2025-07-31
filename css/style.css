@@ -419,6 +419,15 @@ a:hover {
     text-align: center;
 }
 
+.lawyer-photo {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-lg);
+    object-fit: cover;
+}
+
 .image-placeholder {
     background-color: var(--bg-light);
     border-radius: var(--border-radius-lg);
