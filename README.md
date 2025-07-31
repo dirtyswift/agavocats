@@ -1,155 +1,131 @@
-# AG AVOCATS - Wrapper iframe
+# 🏛️ AG AVOCATS - Cabinet d'Avocats
 
-Ce projet contient un wrapper iframe pour intégrer le site AG AVOCATS dans un container Docker avec Traefik.
+## 📋 Description
 
-## Structure du projet
+Site web professionnel pour le cabinet d'avocats AG AVOCATS, spécialisé en droit commercial. Le site propose une interface moderne et responsive avec un système de blog intégré et un chatbot IA pour l'assistance client.
 
+## 🚀 Fonctionnalités
+
+### ✅ Pages Principales
+- **Page d'accueil** - Présentation du cabinet et services
+- **Services spécialisés** :
+  - Baux commerciaux
+  - Contentieux commercial  
+  - Droit de la franchise
+  - Droit des contrats
+- **Blog** - Système de blog avec Google Sheets API
+- **Contact** - Formulaire de contact avec webhook
+
+### ✅ Fonctionnalités Avancées
+- **🤖 Chatbot IA** - Assistant juridique virtuel
+- **📱 Design responsive** - Optimisé mobile et desktop
+- **🔍 SEO optimisé** - Meta tags, Schema.org, sitemap
+- **📊 Tracking des leads** - Identification source des contacts
+
+## 🛠️ Technologies
+
+- **Frontend** : HTML5, CSS3, JavaScript (Vanilla + Alpine.js)
+- **Backend** : Node.js + Express.js
+- **API** : Google Sheets (via Sheet.best)
+- **Déploiement** : Vercel, Netlify, Railway (multi-plateforme)
+
+## 🚀 Déploiement
+
+### GitHub → Vercel (Recommandé)
+
+1. **Push vers GitHub**
+```bash
+git init
+git add .
+git commit -m "Initial commit - AG AVOCATS website"
+git branch -M main
+git remote add origin https://github.com/VOTRE-USERNAME/ag-avocats.git
+git push -u origin main
 ```
-.
-├── iframe-wrapper.html     # Page HTML principale avec iframe
-├── Dockerfile             # Configuration Docker
-├── nginx.conf             # Configuration Nginx
-├── docker-compose.yml     # Configuration Docker Compose avec Traefik
-└── README.md              # Documentation
-```
 
-## Fonctionnalités
+2. **Déployer sur Vercel**
+- Aller sur [vercel.com](https://vercel.com)
+- Se connecter avec GitHub
+- Importer le repository `ag-avocats`
+- Deploy automatique ✅
 
-- **Iframe sécurisé** : Intégration du site AG AVOCATS avec sandbox approprié
-- **Écran de chargement** : Interface de chargement avec le branding AG AVOCATS
-- **Gestion d'erreurs** : Écran d'erreur avec possibilité de réessayer
-- **Responsive** : Adapté à tous les écrans (desktop, tablet, mobile)
-- **SEO optimisé** : Meta tags et structure HTML optimisés
-- **Sécurité** : Headers de sécurité et configuration Nginx sécurisée
-- **Monitoring** : Health check endpoint pour Traefik
-- **Performance** : Gzip, cache control, optimisations Nginx
+### Alternatives
 
-## Déploiement avec Docker et Traefik
+| Plateforme | Configuration | Temps |
+|------------|---------------|-------|
+| **Netlify** | `netlify.toml` | 30 sec |
+| **Railway** | `Dockerfile` | 2 min |
+| **Heroku** | `Procfile` | 5 min |
 
-### Prérequis
-
-- Docker et Docker Compose installés
-- Traefik configuré avec le réseau `traefik`
-- Nom de domaine pointant vers votre serveur
-
-### Configuration
-
-1. **Modifier le domaine** dans `docker-compose.yml` :
-   ```yaml
-   - "traefik.http.routers.ag-avocats.rule=Host(`votre-domaine.com`)"
-   ```
-
-2. **Modifier l'URL du site** dans `iframe-wrapper.html` si nécessaire :
-   ```javascript
-   const IFRAME_URL = 'https://ag-avocats-site-dirtyswift.replit.app';
-   ```
-
-### Déploiement
+## ⚙️ Installation Locale
 
 ```bash
-# Cloner ou copier les fichiers sur votre VPS
-git clone <votre-repo> ag-avocats-wrapper
-cd ag-avocats-wrapper
+# Cloner le repository
+git clone https://github.com/VOTRE-USERNAME/ag-avocats.git
+cd ag-avocats
 
-# Construire et démarrer le container
-docker-compose up -d
+# Installer les dependencies
+npm install
 
-# Vérifier les logs
-docker-compose logs -f
+# Lancer le serveur de développement
+npm start
 
-# Vérifier le statut
-docker-compose ps
+# Accéder au site
+http://localhost:5000
 ```
 
-### Commandes utiles
+## 📊 API Configuration
 
-```bash
-# Reconstruire après modifications
-docker-compose up -d --build
+### Blog (Google Sheets)
+- **Endpoint** : `https://api.sheetbest.com/sheets/1c93c00e-d99a-46b9-a319-018cb4307ead`
+- **Format** : JSON avec colonnes : titre, contenu, auteur, date, categorie
 
-# Redémarrer le service
-docker-compose restart
+### Chatbot Webhook
+- **Endpoint** : `https://n8n.srv751142.hstgr.cloud/webhook/chatbot-lead`
+- **Tracking** : Sources automatiques (formulaire/chatbot)
 
-# Arrêter le service
-docker-compose down
+## 🔍 SEO & Performance
 
-# Voir les logs Nginx
-docker-compose logs ag-avocats-wrapper
+### Optimisations SEO
+- ✅ Meta tags complets
+- ✅ Schema.org (LegalService, FAQ)
+- ✅ Sitemap XML
+- ✅ Robots.txt
+- ✅ Open Graph / Twitter Cards
 
-# Accéder au container
-docker-compose exec ag-avocats-wrapper sh
+### Performance
+- ✅ CSS optimisé avec variables
+- ✅ JavaScript modulaire
+- ✅ Images optimisées
+- ✅ Cache headers configurés
+
+## 📁 Structure du Projet
+
+```
+ag-avocats/
+├── css/                 # Styles CSS
+│   ├── style.css       # Styles principaux
+│   └── blog.css        # Styles blog
+├── js/                 # Scripts JavaScript
+│   ├── script.js       # Fonctions principales
+│   ├── common.js       # Utilitaires
+│   └── blog.js         # Système blog
+├── *.html              # Pages HTML
+├── server.js           # Serveur Express
+├── package.json        # Dependencies Node.js
+└── README.md           # Documentation
 ```
 
-## Configuration Traefik
+## 🆘 Support
 
-Le fichier `docker-compose.yml` inclut toute la configuration Traefik nécessaire :
+Pour toute question technique ou commerciale :
+- **Email** : contact@cabinetag.com
+- **Site** : [AG AVOCATS](https://ag-avocats.vercel.app)
 
-- **SSL automatique** avec Let's Encrypt
-- **Redirection HTTP vers HTTPS**
-- **Redirection www vers non-www**
-- **Health checks**
-- **Load balancing** (si plusieurs instances)
+## 📄 Licence
 
-## Monitoring et logs
+© 2025 AG AVOCATS. Tous droits réservés.
 
-- **Health check** : `https://votre-domaine.com/health`
-- **Logs Nginx** : `docker-compose logs ag-avocats-wrapper`
-- **Métriques Traefik** : Via le dashboard Traefik
+---
 
-## Sécurité
-
-- Headers de sécurité configurés dans Nginx
-- Iframe avec sandbox approprié
-- Déni d'accès aux fichiers sensibles
-- Configuration HTTPS forcée
-
-## Performance
-
-- **Gzip** activé pour tous les assets
-- **Cache control** optimisé
-- **Resource limits** configurés
-- **Image Docker Alpine** pour une taille réduite
-
-## Maintenance
-
-### Mise à jour de l'URL du site
-
-Si l'URL du site AG AVOCATS change, modifiez la constante dans `iframe-wrapper.html` :
-
-```javascript
-const IFRAME_URL = 'https://nouvelle-url.com';
-```
-
-Puis redéployez :
-
-```bash
-docker-compose up -d --build
-```
-
-### Mise à jour du domaine
-
-Modifiez les labels Traefik dans `docker-compose.yml` et redéployez.
-
-## Dépannage
-
-### Le site ne se charge pas
-
-1. Vérifiez les logs : `docker-compose logs ag-avocats-wrapper`
-2. Vérifiez la connectivité : `curl https://ag-avocats-site-dirtyswift.replit.app`
-3. Vérifiez les DNS : `nslookup votre-domaine.com`
-
-### Erreur SSL
-
-1. Vérifiez que Traefik a accès à Let's Encrypt
-2. Vérifiez que le domaine pointe vers votre serveur
-3. Vérifiez les logs Traefik
-
-### Performance lente
-
-1. Vérifiez les ressources du serveur
-2. Optimisez les limits dans `docker-compose.yml`
-3. Vérifiez la latence réseau vers Replit
-
-## Support
-
-Pour toute question ou problème, contactez l'équipe technique AG AVOCATS.
+**🚀 Prêt pour le déploiement GitHub → Vercel !**
