@@ -1,19 +1,25 @@
-# Utilise une image Nginx légère
-FROM nginx:alpine
+# Use Node.js 20 Alpine image
+FROM node:20-alpine
 
-# Copie le fichier HTML dans le répertoire de Nginx
-COPY iframe-wrapper.html /usr/share/nginx/html/index.html
+# Set working directory
+WORKDIR /app
 
-# Copie la configuration Nginx personnalisée (optionnel)
-COPY nginx.conf /etc/nginx/nginx.conf
+# Copy package files
+COPY package*.json ./
 
-# Expose le port 80
-EXPOSE 80
+# Install dependencies
+RUN npm install --only=production
 
-# Labels pour la documentation
-LABEL maintainer="AG AVOCATS"
-LABEL description="Wrapper iframe pour le site AG AVOCATS"
-LABEL version="1.0"
+# Copy application files
+COPY . .
 
-# Commande par défaut
-CMD ["nginx", "-g", "daemon off;"]
+# Expose port
+EXPOSE 5000
+
+# Set environment variables
+ENV NODE_ENV=production
+ENV PORT=5000
+ENV HOST=0.0.0.0
+
+# Start the application
+CMD ["npm", "start"]
