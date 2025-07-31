@@ -478,15 +478,38 @@
         
         // Gestion du formatage pour les réponses du bot
         if (type === 'bot') {
-            // Conversion simple du formatage markdown
-            let formattedText = text
-                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // **texte** -> <strong>texte</strong>
-                .replace(/\*(.*?)\*/g, '<em>$1</em>') // *texte* -> <em>texte</em>
-                .replace(/- (.*)/g, '• $1') // - item -> • item
-                .replace(/\n/g, '<br>') // \n -> <br>
-                .replace(/> (.*)/g, '<blockquote>$1</blockquote>'); // > texte -> <blockquote>texte</blockquote>
-            
-            messageDiv.innerHTML = formattedText;
+            // Vérifier si le message contient un formulaire HTML
+            if (text.includes('<form') && text.includes('lead-form')) {
+                // Styliser le formulaire pour qu'il s'intègre mieux au design
+                let formattedText = text
+                    .replace(/style="font-family:Arial,sans-serif;"/, 'style="font-family:var(--font-secondary);background:#f8f9fa;padding:20px;border-radius:8px;margin:10px 0;"')
+                    .replace(/style="width:100%;margin-bottom:10px;"/g, 'style="width:100%;margin-bottom:12px;padding:8px 12px;border:1px solid #ddd;border-radius:4px;font-family:inherit;"')
+                    .replace(/style="background-color:#032a4e;color:#fff;border:none;padding:10px 20px;border-radius:8px;cursor:pointer;"/, 'style="background-color:var(--accent-color);color:white;border:none;padding:12px 24px;border-radius:6px;cursor:pointer;font-family:inherit;font-weight:500;transition:background-color 0.2s;"')
+                    .replace(/<script>[\s\S]*?<\/script>/, ''); // Supprimer le script qui ne fonctionne pas
+                
+                messageDiv.innerHTML = formattedText;
+                
+                // Ajouter l'événement après insertion dans le DOM
+                setTimeout(() => {
+                    const form = messageDiv.querySelector('#lead-form');
+                    if (form) {
+                        form.addEventListener('submit', async function(e) {
+                            e.preventDefault();
+                            await handleChatbotFormSubmission(form);
+                        });
+                    }
+                }, 100);
+            } else {
+                // Conversion simple du formatage markdown pour les messages normaux
+                let formattedText = text
+                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // **texte** -> <strong>texte</strong>
+                    .replace(/\*(.*?)\*/g, '<em>$1</em>') // *texte* -> <em>texte</em>
+                    .replace(/- (.*)/g, '• $1') // - item -> • item
+                    .replace(/\n/g, '<br>') // \n -> <br>
+                    .replace(/> (.*)/g, '<blockquote>$1</blockquote>'); // > texte -> <blockquote>texte</blockquote>
+                
+                messageDiv.innerHTML = formattedText;
+            }
         } else {
             messageDiv.textContent = text;
         }
@@ -581,6 +604,41 @@
             input.disabled = false;
             sendButton.disabled = false;
             input.focus();
+        }
+    }
+
+    // Fonction pour gérer la soumission du formulaire du chatbot
+    async function handleChatbotFormSubmission(form) {
+        const submitButton = form.querySelector('button[type="submit"]');
+        const originalText = submitButton.textContent;
+        
+        // Changer le texte du bouton pour indiquer l'envoi
+        submitButton.textContent = 'Envoi en cours...';
+        submitButton.disabled = true;
+        
+        try {
+            const formData = new FormData(form);
+            formData.set("datetime", new Date().toISOString());
+
+            const payload = {};
+            for (const [key, value] of formData.entries()) {
+                payload[key] = value;
+            }
+
+            const response = await fetch('https://n8n.srv751142.hstgr.cloud/webhook/chatbot-lead', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload),
+            });
+
+            if (response.ok) {
+                form.innerHTML = `<p style="color:var(--primary-color);font-weight:bold;text-align:center;padding:20px;">✅ Merci ! Nous reviendrons vers vous dans les plus brefs délais.</p>`;
+            } else {
+                throw new Error('Erreur lors de l\'envoi');
+            }
+        } catch (error) {
+            console.error('Erreur lors de la soumission:', error);
+            form.innerHTML = `<p style="color:red;text-align:center;padding:20px;">❌ Une erreur est survenue. Merci d'essayer plus tard ou de nous contacter directement.</p>`;
         }
     }
     </script>
