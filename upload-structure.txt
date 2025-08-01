@@ -1,0 +1,38 @@
+STRUCTURE COMPLÈTE À UPLOADER SUR GITHUB:
+
+📁 RACINE (ag-avocats):
+├── .gitignore
+├── README.md
+├── package.json
+├── server.js
+├── vercel.json
+├── netlify.toml
+├── Dockerfile
+├── Procfile
+├── robots.txt
+├── sitemap.xml
+├── index.html
+├── blog.html
+├── article.html
+├── contact.html
+├── mentions-legales.html
+├── baux-commerciaux.html
+├── contentieux-commercial.html
+├── droit-contrats.html
+├── droit-franchise.html
+├── test-chatbot.html
+├── chatbot-form-template.html
+├── iframe-wrapper.html
+├── maitre-abou.avif
+
+📁 css/ (CRÉER DOSSIER):
+├── style.css
+└── blog.css
+
+📁 js/ (CRÉER DOSSIER):
+├── script.js
+├── common.js
+└── blog.js
+
+IMPORTANT: GitHub web ne crée pas les dossiers automatiquement.
+Vous devez uploader les fichiers avec leur chemin complet.
